@@ -147,11 +147,12 @@ class User {
     const zipCode = userZipAndRadius.rows[0].zipCode;
     console.log("zipCode,", zipCode);
 
-    const zipsInRange = await zipcodes.radius(radius, zipCode);
+    const zipsInRange = zipcodes.radius(zipCode, radius);
 
     console.log("user zipsInRange", zipsInRange)
 
-    const usersInRadius = result.rows.filter(user => zipsInRange.includes(user.zipCode));
+    const usersInRadius = result.rows.filter(user => zipsInRange.includes(user.zipCode.toString()));
+    console.log("type zip code=", typeof result.rows[0].zipCode);
 
     // create an array of zipcodes that are within distance of curr user based
     // on curr_user radious and zip
