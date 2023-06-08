@@ -47,8 +47,8 @@ class Message {
   static async findAll(username, otherUser ) {
 
     const messageRes = await db.query(`
-        SELECT to_user,
-               from_user,
+        SELECT to_user AS "toUser",
+               from_user AS "fromUser",
                message,
                timestamp
         FROM messages
