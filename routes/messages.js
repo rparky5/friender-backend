@@ -5,7 +5,7 @@
 // const jsonschema = require("jsonschema");
 
 const express = require("express");
-const { ensureCorrectUserOrAdmin } = require("../middleware/auth");
+const { ensureCorrectUser } = require("../middleware/auth");
 // const { BadRequestError } = require("../expressError");
 const Message = require("../models/message");
 // const userNewSchema = require("../schemas/userNew.json");
@@ -17,7 +17,7 @@ const router = express.Router();
  * Returns list of all messages between "this" user and another user.
  **/
 
-router.get("/:username", ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.get("/:username", ensureCorrectUser, async function (req, res, next) {
   const messages = await Message.findAll(req.params.username, req.query.otherUser );
   return res.json({ messages });
 });
@@ -28,7 +28,7 @@ router.get("/:username", ensureCorrectUserOrAdmin, async function (req, res, nex
  * ADD SCHEMA VALIDATION IF TIME
  */
 
-router.post("/:username", ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.post("/:username", ensureCorrectUser, async function (req, res, next) {
 
   const message = await Message.create(req.body);
   return res.status(201).json({ message });

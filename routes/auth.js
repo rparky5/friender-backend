@@ -67,7 +67,6 @@ router.post("/register", upload.single('photoUrl'), async function (req, res, ne
 
   const bucketName = process.env.AWS_BUCKET_NAME;
   const key = req.file.originalname;
-  console.log("bucket name>", process.env.AWS_BUCKET_NAME);
 
   // Create parameters for S3 upload
   const params = {
@@ -76,10 +75,8 @@ router.post("/register", upload.single('photoUrl'), async function (req, res, ne
     Body: req.file.buffer
   };
   const uploadedImg = await s3.upload(params).promise();
-  console.log("checking img upload>", uploadedImg.Location);
   //add variable to hold photo url and props from req.body, pass that into
   // User.register instead of re.body
-  console.log("req body isssss", req.body);
   const propsWithPhotoUrl = {...req.body, photoUrl: uploadedImg.Location};
 
   const newUser = await User.register({ ...propsWithPhotoUrl });

@@ -142,17 +142,9 @@ class User {
       `,[username]);
 
     const radius = userZipAndRadius.rows[0].radius;
-
-    console.log("radius,", radius)
     const zipCode = userZipAndRadius.rows[0].zipCode;
-    console.log("zipCode,", zipCode);
-
     const zipsInRange = zipcodes.radius(zipCode, radius);
-
-    console.log("user zipsInRange", zipsInRange)
-
     const usersInRadius = result.rows.filter(user => zipsInRange.includes(user.zipCode.toString()));
-    console.log("type zip code=", typeof result.rows[0].zipCode);
 
     // create an array of zipcodes that are within distance of curr user based
     // on curr_user radious and zip
@@ -189,6 +181,20 @@ class User {
     let allMatches = matchesRes.rows;
     if (!allMatches) allMatches = {matches: "none tesing"}
     return allMatches;
+  }
+
+  static async userInteraction(currUser, viewedUser, didLike) {
+    const newInteraction = await db.query(`
+    INSERT INTO interactions
+    (curr_user, viewed_user, did_like)
+    VALUES ($1, $2, $3)
+    RETURNING
+      curr_user AS "currUser",
+      viewed_user AS "viewedUser",
+      did_like AS "didLike"
+    `, [currUser, viewedUser, didLike]);
+
+    return newInteraction.rows[0]
   }
 
   //------------ABOVE ONLY --- BELOW IS FROM JOBLY ----------------
