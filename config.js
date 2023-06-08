@@ -28,6 +28,7 @@ console.log("PORT:".yellow, PORT.toString());
 console.log("BCRYPT_WORK_FACTOR".yellow, BCRYPT_WORK_FACTOR);
 console.log("Database:".yellow, getDatabaseUri());
 console.log("---");
+console.log("access code is>>", process.env.AWS_ACCESS_CODE)
 
 module.exports = {
   SECRET_KEY,

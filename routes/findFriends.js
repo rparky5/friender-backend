@@ -1,5 +1,16 @@
 "use strict";
 
+// const AWS = require('aws-sdk');
+// AWS.config.update({
+//   accessKeyId: process.env.AWS_ACCESS_CODE,
+//   secretAccessKey: process.env.AWS_SECRET_CODE
+// });
+
+// const multer = require('multer');
+// const upload = multer({ storage: multer.memoryStorage() });
+
+// const s3 = new AWS.S3({ region: process.env.AWS_REGION });
+
 /** Routes for users. */
 
 // const jsonschema = require("jsonschema");
@@ -21,5 +32,24 @@ router.get("/:username",ensureCorrectUserOrAdmin, async function (req, res, next
   const users = await User.findAll(req.params.username);
   return res.json({ users });
 });
+
+//for AWS
+// router.post("/", upload.single('photo'), async function (req, res, next) {
+  // Set the S3 bucket name and key (filename) under which the file will be stored
+  // const bucketName = process.env.AWS_BUCKET_NAME;
+  // const key = req.file.originalname;
+  // console.log("bucket name>", process.env.AWS_BUCKET_NAME);
+
+  // // Create parameters for S3 upload
+  // const params = {
+  //   Bucket: bucketName,
+  //   Key: key,
+  //   Body: req.file.buffer
+  // };
+  // const uploadedImg = await s3.upload(params).promise();
+  // console.log("checking img upload>", uploadedImg.Location);
+  // return res.json({ users });
+  // return res.json({name: "rusty"})
+// });
 
 module.exports = router;

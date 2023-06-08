@@ -16,7 +16,7 @@ CREATE TABLE users (
   hobbies TEXT NOT NULL,
   zip_code INTEGER,
   radius INTEGER,
-  photo_url TEXT
+  photo_url TEXT DEFAULT ''
 );
 
 CREATE TABLE messages (
