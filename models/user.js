@@ -2,6 +2,7 @@
 
 const db = require("../db");
 const bcrypt = require("bcrypt");
+const zipcodes = require('zipcodes');
 // const { sqlForPartialUpdate } = require("../helpers/sql");
 const {
   NotFoundError,
@@ -135,8 +136,22 @@ class User {
     );
     //make a query for current users zipcode and radious
     const userZipAndRadius = await db.query(`
-    SELECT 
-      `,[])
+      SELECT zip_code AS "zipCode", radius
+      FROM users
+      WHERE username = $1
+      `,[username]);
+
+    const radius = userZipAndRadius.rows[0].radius;
+
+    console.log("radius,", radius)
+    const zipCode = userZipAndRadius.rows[0].zipCode;
+    console.log("zipCode,", zipCode);
+
+    const zipsInRange = await zipcodes.radius(radius, zipCode);
+
+    console.log("user zipsInRange", zipsInRange)
+
+    const usersInRadius = result.rows.filter(user => zipsInRange.includes(user.zipCode));
 
     // create an array of zipcodes that are within distance of curr user based
     // on curr_user radious and zip
@@ -145,7 +160,7 @@ class User {
     //use map/filter on the array, seeing if the current objects zipcode is
     // included in the zipcode possibilities
 
-    return result.rows;
+    return usersInRadius
   }
 
   /** Given a username, retireve all matches.
