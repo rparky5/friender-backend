@@ -133,6 +133,17 @@ class User {
         AND username != $1
         ORDER BY username`,[username]
     );
+    //make a query for current users zipcode and radious
+    const userZipAndRadius = await db.query(`
+    SELECT 
+      `,[])
+
+    // create an array of zipcodes that are within distance of curr user based
+    // on curr_user radious and zip
+
+    //"result" is all users our current user hasnt seen.  from there,
+    //use map/filter on the array, seeing if the current objects zipcode is
+    // included in the zipcode possibilities
 
     return result.rows;
   }

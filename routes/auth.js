@@ -54,7 +54,7 @@ router.post("/token", async function (req, res, next) {
  * Authorization required: none
  */
 
-router.post("/register", upload.single('photo'), async function (req, res, next) {
+router.post("/register", upload.single('photoUrl'), async function (req, res, next) {
   // const validator = jsonschema.validate(
   //   req.body,
   //   userRegisterSchema,
@@ -79,6 +79,7 @@ router.post("/register", upload.single('photo'), async function (req, res, next)
   console.log("checking img upload>", uploadedImg.Location);
   //add variable to hold photo url and props from req.body, pass that into
   // User.register instead of re.body
+  console.log("req body isssss", req.body);
   const propsWithPhotoUrl = {...req.body, photoUrl: uploadedImg.Location};
 
   const newUser = await User.register({ ...propsWithPhotoUrl });
