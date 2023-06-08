@@ -29,7 +29,6 @@ router.get("/:username", ensureCorrectUser, async function (req, res, next) {
  */
 
 router.post("/:username", ensureCorrectUser, async function (req, res, next) {
-
   const message = await Message.create(req.body);
   return res.status(201).json({ message });
 });

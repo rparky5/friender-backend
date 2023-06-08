@@ -19,13 +19,18 @@ class Message {
                           from_user,
                           message,
                           timestamp)
-        VALUES ($1, $2, $3, CURRENT_TIMESTAMP)`, [
+        VALUES ($1, $2, $3, CURRENT_TIMESTAMP)
+        RETURNING
+          to_user AS toUser,
+          from_user AS fromUser,
+          message,
+          timestamp`, [
       data.toUser,
       data.fromUser,
       data.message
     ]);
-    // const message = result.rows[0];
-    const message = {"testing": "confirmed message"}
+    const message = result.rows[0];
+    // const message = {"testing": "confirmed message"}
 
 
     return message;
