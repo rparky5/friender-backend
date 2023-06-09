@@ -110,6 +110,28 @@ class User {
     return user;
   }
 
+  /** Given a username, return data about user.
+   *
+   * Returns { username, first_name, last_name, email, hobbies, zip_code, radius, photo_url }
+   */
+
+  static async get(username) {
+    const userRes = await db.query(`
+        SELECT username,
+               first_name AS "firstName",
+               last_name  AS "lastName",
+               email,
+               hobbies,
+               zip_code AS "zipCode",
+               radius,
+               photo_url AS "photoUrl"
+        FROM users
+        WHERE username = $1`, [username],
+    );
+
+    return userRes.rows[0]
+  }
+
   /** Find all users that haven't been viewed already.
    *
    * Returns [{ username, first_name, last_name, email, hobbies, zipCode, radius}, ...]

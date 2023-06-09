@@ -5,6 +5,7 @@
 // const jsonschema = require("jsonschema");
 
 const express = require("express");
+const {ensureCorrectUser} = require("../middleware/auth")
 const router = new express.Router();
 const { createToken } = require("../helpers/tokens");
 const User = require("../models/user");
@@ -82,6 +83,19 @@ router.post("/register", upload.single('photoUrl'), async function (req, res, ne
   const newUser = await User.register({ ...propsWithPhotoUrl });
   const token = createToken(newUser);
   return res.status(201).json({ token, newUser });
+});
+
+/** GET /[username] => { user }
+ *
+ * Returns { username, firstName, lastName, isAdmin, jobs }
+ *   where jobs is { id, title, companyHandle, companyName, state }
+ *
+ * Authorization required: admin or same user-as-:username
+ **/
+
+router.get("/:username", ensureCorrectUser, async function (req, res, next) {
+  const user = await User.get(req.params.username);
+  return res.json({ user });
 });
 
 

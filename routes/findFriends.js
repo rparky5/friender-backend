@@ -33,23 +33,4 @@ router.get("/:username",ensureCorrectUser, async function (req, res, next) {
   return res.json({ users });
 });
 
-//for AWS
-// router.post("/", upload.single('photo'), async function (req, res, next) {
-  // Set the S3 bucket name and key (filename) under which the file will be stored
-  // const bucketName = process.env.AWS_BUCKET_NAME;
-  // const key = req.file.originalname;
-  // console.log("bucket name>", process.env.AWS_BUCKET_NAME);
-
-  // // Create parameters for S3 upload
-  // const params = {
-  //   Bucket: bucketName,
-  //   Key: key,
-  //   Body: req.file.buffer
-  // };
-  // const uploadedImg = await s3.upload(params).promise();
-  // console.log("checking img upload>", uploadedImg.Location);
-  // return res.json({ users });
-  // return res.json({name: "rusty"})
-// });
-
 module.exports = router;
