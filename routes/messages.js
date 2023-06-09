@@ -29,7 +29,12 @@ router.get("/:username", ensureCorrectUser, async function (req, res, next) {
  */
 
 router.post("/:username", ensureCorrectUser, async function (req, res, next) {
-  const message = await Message.create(req.body);
+  const data = {
+    toUser: req.params.username,
+    fromUser: req.body.fromUser,
+    message: req.body.message
+  };
+  const message = await Message.create(data);
   return res.status(201).json({ message });
 });
 
