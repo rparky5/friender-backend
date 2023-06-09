@@ -56,17 +56,11 @@ router.post("/token", async function (req, res, next) {
  */
 
 router.post("/register", upload.single('photoUrl'), async function (req, res, next) {
-  // const validator = jsonschema.validate(
-  //   req.body,
-  //   userRegisterSchema,
-  //   {required: true}
-  // );
-  // if (!validator.valid) {
-  //   const errs = validator.errors.map(e => e.stack);
-  //   throw new BadRequestError(errs);
-  // }
-
   const bucketName = process.env.AWS_BUCKET_NAME;
+  console.log("req.body.photoUrl is", req.body.photoUrl);
+  console.log("req body object is", req.body);
+  console.log("req.file isssss", req.file);
+
   const key = req.file.originalname;
 
   // Create parameters for S3 upload
@@ -80,9 +74,9 @@ router.post("/register", upload.single('photoUrl'), async function (req, res, ne
   // User.register instead of re.body
   const propsWithPhotoUrl = {...req.body, photoUrl: uploadedImg.Location};
 
-  const newUser = await User.register({ ...propsWithPhotoUrl });
-  const token = createToken(newUser);
-  return res.status(201).json({ token, newUser });
+  const user = await User.register({ ...propsWithPhotoUrl });
+  const token = createToken(user);
+  return res.status(201).json({ token, user });
 });
 
 /** GET /[username] => { user }

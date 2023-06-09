@@ -146,7 +146,8 @@ class User {
                email,
                hobbies,
                zip_code AS "zipCode",
-               radius
+               radius,
+               photo_url AS "photoUrl"
         FROM users
         WHERE username NOT IN (
           SELECT viewed_user
@@ -204,7 +205,7 @@ class User {
     if (!allMatches) allMatches = {matches: "none tesing"}
     return allMatches;
   }
-
+  
   static async userInteraction(currUser, viewedUser, didLike) {
     const newInteraction = await db.query(`
     INSERT INTO interactions

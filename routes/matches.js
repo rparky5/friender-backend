@@ -12,6 +12,11 @@ const User = require("../models/user");
 // const userNewSchema = require("../schemas/userNew.json");
 // const userUpdateSchema = require("../schemas/userUpdate.json");
 
+/**static async likeAUser(username, interactingUser) {
+    let res = await this.request(`matches/${username}`, {viewedUser: interactingUser, didLike: true}, "post");
+    return res.interaction
+  } */
+
 const router = express.Router();
 
 router.post("/:username", ensureCorrectUser, async function (req, res, next) {
