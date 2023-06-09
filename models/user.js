@@ -146,7 +146,8 @@ class User {
                email,
                hobbies,
                zip_code AS "zipCode",
-               radius
+               radius,
+               photo_url AS "photoUrl"
         FROM users
         WHERE username NOT IN (
           SELECT viewed_user

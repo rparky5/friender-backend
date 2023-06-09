@@ -56,18 +56,8 @@ router.post("/token", async function (req, res, next) {
  */
 
 router.post("/register", upload.single('photoUrl'), async function (req, res, next) {
-  // const validator = jsonschema.validate(
-  //   req.body,
-  //   userRegisterSchema,
-  //   {required: true}
-  // );
-  // if (!validator.valid) {
-  //   const errs = validator.errors.map(e => e.stack);
-  //   throw new BadRequestError(errs);
-  // }
-
   const bucketName = process.env.AWS_BUCKET_NAME;
-  const key = req.file.originalname;
+  let key = req.file.originalname ? req.file.originalname : req.file.fieldname
 
   // Create parameters for S3 upload
   const params = {
