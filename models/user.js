@@ -205,7 +205,7 @@ class User {
     if (!allMatches) allMatches = {matches: "none tesing"}
     return allMatches;
   }
-
+  
   static async userInteraction(currUser, viewedUser, didLike) {
     const newInteraction = await db.query(`
     INSERT INTO interactions
