@@ -57,10 +57,6 @@ router.post("/token", async function (req, res, next) {
 
 router.post("/register", upload.single('photoUrl'), async function (req, res, next) {
   const bucketName = process.env.AWS_BUCKET_NAME;
-  console.log("req.body.photoUrl is", req.body.photoUrl);
-  console.log("req body object is", req.body);
-  console.log("req.file isssss", req.file);
-
   const key = req.file.originalname;
 
   // Create parameters for S3 upload
